@@ -37,13 +37,13 @@ function EditUser({ user, className='' }) {
     <section className={className}>
       <Button 
         onClick={confirmEditUser}
-        className="px-4 py-2 text-sm font-medium text-gray-900 bg-amber-400 border border-gray-200 rounded-s-lg hover:bg-amber-500 hover:text-white focus:z-10 focus:ring-2 focus:ring-white focus:text-blue-700 dark:bg-amber-500 dark:border-black dark:text-white dark:hover:text-white dark:hover:bg-amber-600 dark:focus:ring-blue-500 dark:focus:text-white"
+        className="px-4 py-2 text-sm font-medium text-gray-900 bg-amber-400 border border-gray-200 rounded-s-lg hover:bg-amber-500 hover:text-white focus:z-10 focus:ring-2 focus:ring-white dark:bg-amber-500 dark:border-black dark:text-white dark:hover:text-white dark:hover:bg-amber-600 dark:focus:ring-blue-500 dark:focus:text-white"
       >
         Edit
       </Button>
       <Modal show={confirmingEditUser} onClose={closeModal}>
-          <div className='bg-gray-300 dark:bg-gray-800'>
-              <h3 className='text-2xl text-center font-bold py-2 '>Create User</h3>
+          <div className='bg-gray-300 dark:bg-gray-700'>
+              <h3 className='text-2xl text-center font-bold py-2 '>Eidt User</h3>
               <form onSubmit={editUser} className="p-6">
                   <TextInput type="hidden" name="id" value={editData.id} />
                   <div class="relative">
@@ -84,18 +84,19 @@ function EditUser({ user, className='' }) {
                   </div>
 
                   <div className="mt-6 flex justify-between">
-                      <SecondaryButton
-                        className="inline-block rounded-lg bg-gray-500 hover:bg-gray-600 px-10 py-3 mx-auto text-sm font-medium text-white"
-                        onClick={closeModal}
-                      >
-                          Cancel
-                      </SecondaryButton>
-                      <PrimaryButton 
-                        className="inline-block rounded-lg bg-blue-500 hover:bg-blue-600 px-10 py-3 mx-auto text-sm font-medium text-white" 
-                        processing={processing}
-                      >
-                          Update
-                      </PrimaryButton>
+                    <Button
+                      type="button"
+                      className="inline-block rounded-lg border border-black bg-gray-700 hover:bg-gray-800 dark:bg-gray-500 dark:hover:bg-gray-600 px-10 py-3 mx-auto text-sm font-medium text-white"
+                      onClick={closeModal}
+                    >
+                        Cancel
+                    </Button>
+                    <Button 
+                      className="inline-block rounded-lg border border-black bg-blue-600 hover:bg-blue-800 dark:bg-indigo-900 dark:hover:bg-gray-900 px-10 py-3 mx-auto text-sm font-medium text-white" 
+                      processing={processing}
+                    >
+                        Submit
+                    </Button>
                   </div>
               </form>
           </div>

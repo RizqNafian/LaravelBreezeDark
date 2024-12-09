@@ -5,19 +5,19 @@ import CreateUser from './Partials/CreateUser';
 import EditUser from './Partials/EditUser';
 
 function Users({ users, auth }) {
-  console.log(users);
+  console.log(auth);
   return (
     <AuthenticatedLayout
         user={auth.user}
         header={
             <div className="flex items-center justify-between">
-                <h2 className="font-semibold text-xl text-gray-800 leading-tight">Users Management</h2>
+                <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Users Management</h2>
                 <CreateUser className="" />
             </div>
         }
     >
       <Head title="Users Management" />
-      <div className="py-2">
+      <div className="mt-10">
           <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div className="overflow-x-auto sm:rounded-lg shadow-md">
               <table className="min-w-full border border-black divide-y-2 divide-gray-200 bg-white text-sm dark:bg-gray-700">

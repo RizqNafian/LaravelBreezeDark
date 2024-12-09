@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
@@ -8,38 +8,15 @@ import { Link } from '@inertiajs/react';
 export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
     
-    const [hiddenA, setHiddenA] = useState(false);
-    const [hiddenB, setHiddenB] = useState(true);
-
-    document.documentElement.classList.toggle(
-        'dark',
-        localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-    )
-    // document.getElementById('apa').classList.toggle('hidden', localStorage.setItem('coba', document.getElementById('apa').classList.toggle('hidden'), localStorage.getItem('coba') === 'false' || localStorage.getItem('coba') === true);
-    
     const toggleLight = () => {
-        setHiddenA(true);
-        setHiddenB(false);
-        localStorage.setItem('coba', "true");
-        localStorage.theme = 'dark';
+        localStorage.theme = 'light';
+        document.documentElement.classList.toggle('dark', false);
     }
     const toggleDark = () => {
-        setHiddenA(false);
-        setHiddenB(true);
-        localStorage.setItem('coba', "false");
-        localStorage.theme = 'light';
+        localStorage.theme = 'dark';
+        document.documentElement.classList.toggle('dark', true);
     }
-    localStorage.getItem('coba') === 'true' || 'false';
-    // onmousemove = () => {
-    //     if (localStorage.getItem('coba') === 'true' ) {
-    //         setHiddenA(true);
-    //         setHiddenB(false);
-    //     } else {
-    //         setHiddenA(flase);
-    //         setHiddenB(true);
-    //     }
-    // }
-    
+
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
             <nav className="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
@@ -59,53 +36,97 @@ export default function Authenticated({ user, header, children }) {
                                 <NavLink href={route('users.index')} active={route().current('users.index')}>
                                     User Management
                                 </NavLink>
-
-                                <p hidden={hiddenA}>test</p>
-                                <p hidden={hiddenB}>test2</p>
-                                {/* <button onClick={toggleDark} className='bg-gray-400 dark:bg-gray-700'>a
-                                </button>
-                                <button onClick={toggleLight} className='bg-gray-400 dark:bg-gray-700'>a
-                                </button> */}
-                                <button onClick={toggleLight} hidden={hiddenA} className='bg-gray-400 dark:bg-gray-700'>
-                                    <svg 
-                                        className="w-6 h-6 text-gray-800 dark:text-white" 
-                                        aria-hidden="true" 
-                                        xmlns="http://www.w3.org/2000/svg" 
-                                        width="24" 
-                                        height="24" 
-                                        fill="currentColor" 
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path 
-                                            fill-rule="evenodd" 
-                                            d="M13 3a1 1 0 1 0-2 0v2a1 1 0 1 0 2 0V3ZM6.343 4.929A1 1 0 0 0 4.93 6.343l1.414 1.414a1 1 0 0 0 1.414-1.414L6.343 4.929Zm12.728 1.414a1 1 0 0 0-1.414-1.414l-1.414 1.414a1 1 0 0 0 1.414 1.414l1.414-1.414ZM12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm-9 4a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2H3Zm16 0a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2h-2ZM7.757 17.657a1 1 0 1 0-1.414-1.414l-1.414 1.414a1 1 0 1 0 1.414 1.414l1.414-1.414Zm9.9-1.414a1 1 0 0 0-1.414 1.414l1.414 1.414a1 1 0 0 0 1.414-1.414l-1.414-1.414ZM13 19a1 1 0 1 0-2 0v2a1 1 0 1 0 2 0v-2Z" 
-                                            clip-rule="evenodd"
-                                        />
-                                    </svg>
-                                </button>
-
-                                <button onClick={toggleDark} hidden={hiddenB} className='bg-gray-400 dark:bg-gray-700'>
-                                    <svg 
-                                        className="w-6 h-6 text-gray-800 dark:text-white" 
-                                        aria-hidden="true" 
-                                        xmlns="http://www.w3.org/2000/svg" 
-                                        width="24" 
-                                        height="24" 
-                                        fill="currentColor" 
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path 
-                                            fill-rule="evenodd" 
-                                            d="M11.675 2.015a.998.998 0 0 0-.403.011C6.09 2.4 2 6.722 2 12c0 5.523 4.477 10 10 10 4.356 0 8.058-2.784 9.43-6.667a1 1 0 0 0-1.02-1.33c-.08.006-.105.005-.127.005h-.001l-.028-.002A5.227 5.227 0 0 0 20 14a8 8 0 0 1-8-8c0-.952.121-1.752.404-2.558a.996.996 0 0 0 .096-.428V3a1 1 0 0 0-.825-.985Z" 
-                                            clip-rule="evenodd"
-                                        />
-                                    </svg>
-                                </button>
-
+                                <NavLink href={route('email.index')} active={route().current('email.index')}>
+                                    Email
+                                </NavLink>
+                                <NavLink href={route('cache.index')} active={route().current('cache.index')}>
+                                    Cache
+                                </NavLink>
                             </div>
                         </div>
 
                         <div className="hidden sm:flex sm:items-center sm:ms-6">
+                        <div className="ms-3 relative">
+                                <Dropdown>
+                                    <Dropdown.Trigger>
+                                    <span className="inline-flex rounded-md">
+                                            <button
+                                                type="button"
+                                                className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150"
+                                            >
+                                                <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 5V3m0 18v-2M7.05 7.05 5.636 5.636m12.728 12.728L16.95 16.95M5 12H3m18 0h-2M7.05 16.95l-1.414 1.414M18.364 5.636 16.95 7.05M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"/>
+                                                </svg>
+                                                <svg
+                                                    className="ms-2 -me-0.5 h-4 w-4"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    viewBox="0 0 20 20"
+                                                    fill="currentColor"
+                                                >
+                                                    <path
+                                                        fillRule="evenodd"
+                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                        clipRule="evenodd"
+                                                    />
+                                                </svg>
+                                            </button>
+                                        </span>
+                                    </Dropdown.Trigger>
+
+                                    <Dropdown.Content>
+                                        <ul className='text-gray-500 dark:text-gray-400'>
+                                            <li>
+                                                <span className='flex py-2 dark:bg-gray-700 dark:hover:bg-gray-800'>
+                                                    <button onClick={toggleLight} >
+                                                        <div className="flex justify-between pl-2">
+                                                            <svg 
+                                                                className="w-6 h-6 text-gray-800 dark:text-white" 
+                                                                aria-hidden="true" 
+                                                                xmlns="http://www.w3.org/2000/svg" 
+                                                                width="24" 
+                                                                height="24" 
+                                                                fill="currentColor" 
+                                                                viewBox="0 0 24 24"
+                                                            >
+                                                                <path 
+                                                                    fill-rule="evenodd" 
+                                                                    d="M13 3a1 1 0 1 0-2 0v2a1 1 0 1 0 2 0V3ZM6.343 4.929A1 1 0 0 0 4.93 6.343l1.414 1.414a1 1 0 0 0 1.414-1.414L6.343 4.929Zm12.728 1.414a1 1 0 0 0-1.414-1.414l-1.414 1.414a1 1 0 0 0 1.414 1.414l1.414-1.414ZM12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm-9 4a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2H3Zm16 0a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2h-2ZM7.757 17.657a1 1 0 1 0-1.414-1.414l-1.414 1.414a1 1 0 1 0 1.414 1.414l1.414-1.414Zm9.9-1.414a1 1 0 0 0-1.414 1.414l1.414 1.414a1 1 0 0 0 1.414-1.414l-1.414-1.414ZM13 19a1 1 0 1 0-2 0v2a1 1 0 1 0 2 0v-2Z" 
+                                                                    clip-rule="evenodd"
+                                                                />
+                                                            </svg>
+                                                            <p className='pl-2'>Light Theme</p>
+                                                        </div>
+                                                    </button>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span className='flex py-2 dark:bg-gray-700 dark:hover:bg-gray-800'>
+                                                    <button onClick={toggleDark} className=''>
+                                                        <div className="flex justify-between pl-2">
+                                                            <svg 
+                                                                className="w-6 h-6 text-gray-800 dark:text-white" 
+                                                                aria-hidden="true" 
+                                                                xmlns="http://www.w3.org/2000/svg" 
+                                                                width="24" 
+                                                                height="24" 
+                                                                fill="currentColor" 
+                                                                viewBox="0 0 24 24"
+                                                            >
+                                                                <path 
+                                                                    fill-rule="evenodd" 
+                                                                    d="M11.675 2.015a.998.998 0 0 0-.403.011C6.09 2.4 2 6.722 2 12c0 5.523 4.477 10 10 10 4.356 0 8.058-2.784 9.43-6.667a1 1 0 0 0-1.02-1.33c-.08.006-.105.005-.127.005h-.001l-.028-.002A5.227 5.227 0 0 0 20 14a8 8 0 0 1-8-8c0-.952.121-1.752.404-2.558a.996.996 0 0 0 .096-.428V3a1 1 0 0 0-.825-.985Z" 
+                                                                    clip-rule="evenodd"
+                                                                />
+                                                            </svg>
+                                                            <p className='pl-2'>Dark Theme</p>
+                                                        </div>
+                                                    </button>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </Dropdown.Content>
+                                </Dropdown>
+                            </div>
                             <div className="ms-3 relative">
                                 <Dropdown>
                                     <Dropdown.Trigger>

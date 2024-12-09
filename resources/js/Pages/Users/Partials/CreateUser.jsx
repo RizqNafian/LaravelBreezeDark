@@ -4,6 +4,7 @@ import InputLabel from '@/Components/InputLabel'
 import TextInput from '@/Components/TextInput'
 import SecondaryButton from '@/Components/SecondaryButton'
 import PrimaryButton from '@/Components/PrimaryButton'
+import Button from '@/Components/Button'
 import { useState, React } from 'react'
 import { useForm } from '@inertiajs/react';
 
@@ -35,12 +36,12 @@ export default function CreateUser({ className='' }) {
 
   return (
     <section className={className}>
-      <PrimaryButton onClick={confirmAddUser}>Create User</PrimaryButton>
+      <Button onClick={confirmAddUser} className='rounded-lg py-2 px-4 bg-gray-700 hover:bg-gray-800 text-white dark:bg-indigo-900 dark:hover:bg-indigo-950 border border-black'>Create User</Button>
       <Modal show={confirmingAddUser} onClose={closeModal}>
-        <div className='bg-gray-300'>
+        <div className='bg-gray-300 dark:bg-gray-700'>
           <h3 className='text-2xl text-center font-bold py-2 '>Create User</h3>
           <form onSubmit={addUser} className="p-6">
-            <div class="relative">
+            <div className="relative">
                 <TextInput
                   type="email"
                   name="email"
@@ -57,7 +58,7 @@ export default function CreateUser({ className='' }) {
                 />
                 <InputError message={errors.email} className="mt-2" />
             </div>
-            <div class="relative my-3">
+            <div className="relative my-3">
                 <TextInput
                   type="text"
                   name="name"
@@ -92,18 +93,19 @@ export default function CreateUser({ className='' }) {
             </div>
 
             <div className="mt-6 flex justify-between">
-              <SecondaryButton
-                className="inline-block rounded-lg bg-gray-500 hover:bg-gray-600 px-10 py-3 mx-auto text-sm font-medium text-white"
+              <Button
+                type="button"
+                className="inline-block rounded-lg border border-black bg-gray-700 hover:bg-gray-800 dark:bg-gray-500 dark:hover:bg-gray-600 px-10 py-3 mx-auto text-sm font-medium text-white"
                 onClick={closeModal}
               >
                   Cancel
-              </SecondaryButton>
-              <PrimaryButton 
-                className="inline-block rounded-lg bg-blue-500 hover:bg-blue-600 px-10 py-3 mx-auto text-sm font-medium text-white" 
+              </Button>
+              <Button 
+                className="inline-block rounded-lg border border-gray-300 bg-blue-600 hover:bg-blue-800 dark:bg-indigo-900 dark:hover:bg-indigo-950 px-10 py-3 mx-auto text-sm font-medium text-white" 
                 processing={processing}
               >
-                  Update
-              </PrimaryButton>
+                  Submit
+              </Button>
           </div>
           </form>
         </div>
